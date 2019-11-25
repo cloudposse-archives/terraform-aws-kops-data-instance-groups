@@ -87,17 +87,17 @@ data "aws_autoscaling_group" "bastions" {
 }
 
 data "aws_launch_configuration" "nodes" {
-  for_each = toset(data.aws_autoscaling_group.nodes.launch_configuration)
+  for_each = toset(data.aws_autoscaling_group.nodes[*].launch_configuration)
   name     = each.key
 }
 
 data "aws_launch_configuration" "masters" {
-  for_each = toset(data.aws_autoscaling_group.masters.launch_configuration)
+  for_each = toset(data.aws_autoscaling_group.masters[*].launch_configuration)
   name     = each.key
 }
 
 data "aws_launch_configuration" "bastions" {
-  for_each = toset(data.aws_autoscaling_group.bastions.launch_configuration)
+  for_each = toset(data.aws_autoscaling_group.bastions[*].launch_configuration)
   name     = each.key
 }
 
