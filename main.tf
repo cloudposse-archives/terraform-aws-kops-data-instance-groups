@@ -5,23 +5,12 @@ locals {
 data "aws_autoscaling_groups" "nodes" {
   filter {
     name   = "key"
-    values = ["KubernetesCluster"]
+    values = ["KubernetesCluster", "k8s.io/role/node"]
   }
 
   filter {
     name   = "value"
-    values = [var.cluster_name]
-  }
-
-
-  filter {
-    name   = "key"
-    values = ["k8s.io/role/node"]
-  }
-
-  filter {
-    name   = "value"
-    values = [1]
+    values = [var.cluster_name, 1]
   }
 }
 
