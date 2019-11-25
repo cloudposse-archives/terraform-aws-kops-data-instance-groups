@@ -14,5 +14,5 @@
 //}
 
 output "test" {
-  value = data.aws_autoscaling_group.nodes
+  value = data.aws_autoscaling_group.nodes.*.launch_configuration
 }
