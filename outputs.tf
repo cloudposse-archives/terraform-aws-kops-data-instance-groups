@@ -14,5 +14,5 @@
 //}
 
 output "test" {
-  value = local.nodes
+  value = {test = {name = "test"}}
 }
