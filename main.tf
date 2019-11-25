@@ -1,5 +1,4 @@
 locals {
-  vpc_id      = var.vpc_id == "" && var.enabled ? concat(data.aws_vpc.kops.*.id, [""])[0] : var.vpc_id
   cluster_tag = "kubernetes.io/cluster/${var.cluster_name}"
 }
 
@@ -55,17 +54,17 @@ data "aws_autoscaling_group" "bastions" {
 }
 
 data "aws_launch_configuration" "nodes" {
-  for_each = toset(data.aws_autoscaling_group.nodes.launch_configuration)
+  for_each = toset(data.aws_autoscaling_group.nodes[*].launch_configuration)
   name     = each.key
 }
 
 data "aws_launch_configuration" "masters" {
-  for_each = toset(data.aws_autoscaling_group.masters.launch_configuration)
+  for_each = toset(data.aws_autoscaling_group.masters[*].launch_configuration)
   name     = each.key
 }
 
 data "aws_launch_configuration" "bastions" {
-  for_each = toset(data.aws_autoscaling_group.bastions.launch_configuration)
+  for_each = toset(data.aws_autoscaling_group.bastions[*].launch_configuration)
   name     = each.key
 }
 
