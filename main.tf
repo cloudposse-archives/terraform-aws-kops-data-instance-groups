@@ -69,7 +69,10 @@ data "aws_launch_configuration" "bastions" {
 }
 
 locals {
-  nodes = [ for autoscale_group in data.aws_autoscaling_group.nodes : autoscale_group ]
+  nodes = { for autoscale_group in data.aws_autoscaling_group.nodes : autoscale_group.name => {
+      name = autoscale_group.name
+    }
+  }
     // autoscale_group.name => merge(autoscale_group, { launch_configuration = data.aws_launch_configuration.nodes[autoscale_group.launch_configuration] })
 
   masters = { for autoscale_group in data.aws_autoscaling_group.masters :
