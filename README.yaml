@@ -1,0 +1,94 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: terraform-aws-kops-data-network
+
+# Tags of this project
+tags:
+  - aws
+  - terraform
+  - terraform-modules
+  - kops-kubernetes
+  - kops
+  - kubernetes
+  - subnets
+  - metadata
+
+# Categories of this project
+categories:
+  - terraform-modules/kops-kubernetes
+
+# Logo for this project
+#logo: docs/logo.png
+
+# License of this project
+license: "APACHE2"
+
+# Canonical GitHub repo
+github_repo: cloudposse/terraform-aws-kops-data-network
+
+# Badges to display
+badges:
+  - name: "Codefresh Build Status"
+    image: "https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-kops-data-network?type=cf-1"
+    url: "https://g.codefresh.io/public/accounts/cloudposse/pipelines/5d4099b8a82ec64bb9fdf9a7"
+  - name: "Latest Release"
+    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-kops-data-network.svg"
+    url: "https://github.com/cloudposse/terraform-aws-kops-data-network/releases/latest"
+  - name: "Slack Community"
+    image: "https://slack.cloudposse.com/badge.svg"
+    url: "https://slack.cloudposse.com"
+
+related:
+  - name: "terraform-aws-kops-data-iam"
+    description: "Terraform module to lookup IAM roles within a Kops cluster"
+    url: "https://github.com/cloudposse/terraform-aws-kops-data-network"
+  - name: "terraform-aws-kops-external-dns"
+    description: "Terraform module to provision an IAM role for external-dns running in a Kops cluster, and attach an IAM policy to the role with permissions to modify Route53 record sets"
+    url: "https://github.com/cloudposse/terraform-aws-kops-external-dns"
+  - name: "terraform-aws-kops-ecr"
+    description: "Terraform module to provision an ECR repository and grant users and kubernetes nodes access to it."
+    url: "https://github.com/cloudposse/terraform-aws-kops-ecr"
+  - name: "terraform-aws-kops-state-backend"
+    description: "Easily bootstrap kops clusters (DNS & S3 Bucket)"
+    url: "https://github.com/cloudposse/terraform-aws-kops-state-backend"
+  - name: "terraform-aws-kops-vpc-peering"
+    description: "Terraform module to create a peering connection between a backing services VPC and a VPC created by Kops"
+    url: "https://github.com/cloudposse/terraform-aws-kops-vpc-peering"
+  - name: "terraform-aws-kops-route53"
+    description: "Terraform module to lookup the IAM role associated with `kops` masters, and attach an IAM policy to the role with permissions to modify Route53 record sets"
+    url: "https://github.com/cloudposse/terraform-aws-kops-route53"
+  - name: "terraform-aws-kops-vault-backend"
+    description: "Terraform module to provision an S3 bucket for HashiCorp Vault secrets storage, and an IAM role and policy with permissions for Kops nodes to access the bucket"
+    url: "https://github.com/cloudposse/terraform-aws-kops-vault-backend"
+  - name: "terraform-aws-kops-chart-repo"
+    description: "Terraform module to provision an S3 bucket for Helm chart repository, and an IAM role and policy with permissions for Kops nodes to access the bucket"
+    url: "https://github.com/cloudposse/terraform-aws-kops-chart-repo"
+
+# Short description of this project
+description: |-
+  Terraform module to lookup network resources within a [Kops](https://github.com/kubernetes/kops) cluster
+
+# How to use this project
+usage: |-
+  ```hcl
+  module "kops_metadata" {
+    source       = "git::https://github.com/cloudposse/terraform-aws-kops-data-network.git?ref=master"
+    cluster_name = "cluster.domain.com"
+  }
+  ```
+  The module will use the cluster name to look up resources via AWS tags. If that fails or picks the wrong network,
+  you can pass in the correct AWS VPC ID in `vcp_id` and it will return the information related to that VPC.
+
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+
+# Contributors to this project
+contributors:
+  - name: "Erik Osterman"
+    github: "osterman"
