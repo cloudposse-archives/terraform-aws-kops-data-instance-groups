@@ -5,27 +5,16 @@ locals {
 data "aws_autoscaling_groups" "nodes" {
   filter {
     name   = "key"
-    values = ["k8s.io/role/node", "KubernetesCluster"]
+    values = ["k8s.io/role/node"]
   }
 
   filter {
     name   = "value"
-    values = [1, var.cluster_name]
+    values = [1]
   }
 }
 
 data "aws_autoscaling_groups" "masters" {
-  filter {
-    name   = "key"
-    values = ["KubernetesCluster"]
-  }
-
-  filter {
-    name   = "value"
-    values = [var.cluster_name]
-  }
-
-
   filter {
     name   = "key"
     values = ["k8s.io/role/master"]
@@ -38,17 +27,6 @@ data "aws_autoscaling_groups" "masters" {
 }
 
 data "aws_autoscaling_groups" "bastions" {
-  filter {
-    name   = "key"
-    values = ["KubernetesCluster"]
-  }
-
-  filter {
-    name   = "value"
-    values = [var.cluster_name]
-  }
-
-
   filter {
     name   = "key"
     values = ["k8s.io/role/bastion"]

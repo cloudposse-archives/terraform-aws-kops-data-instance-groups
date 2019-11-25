@@ -14,5 +14,5 @@
 //}
 
 output "test" {
-  value = data.aws_autoscaling_groups.nodes.names
+  value = data.aws_autoscaling_group.nodes
 }
