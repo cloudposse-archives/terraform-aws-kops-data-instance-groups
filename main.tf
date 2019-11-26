@@ -39,17 +39,17 @@ data "aws_autoscaling_groups" "bastions" {
 
 data "aws_autoscaling_group" "nodes" {
   count = var.enabled ? length(flatten(data.aws_autoscaling_groups.nodes.*.names)) : 0
-  name  = element(flatten(data.aws_autoscaling_groups.nodes.*.names), count.index)
+  name  = flatten(data.aws_autoscaling_groups.nodes.*.names)[count.index]
 }
 
 data "aws_autoscaling_group" "masters" {
   count = var.enabled ? length(flatten(data.aws_autoscaling_groups.masters.*.names)) : 0
-  name  = element(flatten(data.aws_autoscaling_groups.masters.*.names), count.index)
+  name  = flatten(data.aws_autoscaling_groups.masters.*.names)[count.index]
 }
 
 data "aws_autoscaling_group" "bastions" {
   count = var.enabled ? length(flatten(data.aws_autoscaling_groups.bastions.*.names)) : 0
-  name  = element(flatten(data.aws_autoscaling_groups.bastions.*.names), count.index)
+  name  = flatten(data.aws_autoscaling_groups.bastions.*.names)[count.index]
 }
 
 data "aws_launch_configuration" "nodes" {
@@ -103,33 +103,27 @@ locals {
 
   nodes = tomap(
     {
-      for autoscale_group in data.aws_autoscaling_group.nodes :
-      autoscale_group.name => merge(data.aws_launch_configuration.nodes[autoscale_group.launch_configuration],
-        {
-          tags = concat([{ key = "Name", value = autoscale_group.name }], local.node_tags, local.common_tags)
-        }
+      for autoscale_group in data.aws_autoscaling_group.nodes : autoscale_group.name => merge(
+        data.aws_launch_configuration.nodes[autoscale_group.launch_configuration],
+        { tags = concat([{ key = "Name", value = autoscale_group.name }], local.node_tags, local.common_tags) }
       )
     }
   )
 
   masters = tomap(
     {
-      for autoscale_group in data.aws_autoscaling_group.masters :
-      autoscale_group.name => merge(data.aws_launch_configuration.masters[autoscale_group.launch_configuration],
-        {
-          tags = concat([{ key = "Name", value = autoscale_group.name }], local.master_tags, local.common_tags)
-        }
+      for autoscale_group in data.aws_autoscaling_group.masters : autoscale_group.name => merge(
+        data.aws_launch_configuration.masters[autoscale_group.launch_configuration],
+        { tags = concat([{ key = "Name", value = autoscale_group.name }], local.master_tags, local.common_tags) }
       )
     }
   )
 
   bastions = tomap(
     {
-      for autoscale_group in data.aws_autoscaling_group.bastions :
-      autoscale_group.name => merge(data.aws_launch_configuration.bastions[autoscale_group.launch_configuration],
-        {
-          tags = concat([{ key = "Name", value = autoscale_group.name }], local.bastion_tags, local.common_tags)
-        }
+      for autoscale_group in data.aws_autoscaling_group.bastions : autoscale_group.name => merge(
+        data.aws_launch_configuration.bastions[autoscale_group.launch_configuration],
+        { tags = concat([{ key = "Name", value = autoscale_group.name }], local.bastion_tags, local.common_tags) }
       )
     }
   )
