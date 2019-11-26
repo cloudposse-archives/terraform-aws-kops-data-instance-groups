@@ -69,17 +69,69 @@ data "aws_launch_configuration" "bastions" {
 }
 
 locals {
-  nodes = { for autoscale_group in data.aws_autoscaling_group.nodes : autoscale_group.name => {
-      name = autoscale_group.name
+  common_tags = [
+    {
+      key   = "Cluster"
+      value = var.cluster_name
+    },
+    {
+      key   = "KubernetesCluster"
+      value = var.cluster_name
     }
-  }
-    // autoscale_group.name => merge(autoscale_group, { launch_configuration = data.aws_launch_configuration.nodes[autoscale_group.launch_configuration] })
+  ]
 
-  masters = { for autoscale_group in data.aws_autoscaling_group.masters :
-    autoscale_group.name => merge(autoscale_group, { launch_configuration = data.aws_launch_configuration.masters[autoscale_group.launch_configuration] })
-  }
+  node_tags = [
+    {
+      key   = "k8s.io/role/node"
+      value = 1
+    }
+  ]
 
-  bastions = { for autoscale_group in data.aws_autoscaling_group.bastions :
-    autoscale_group.name => merge(autoscale_group, { launch_configuration = data.aws_launch_configuration.bastions[autoscale_group.launch_configuration] })
-  }
+  master_tags = [
+    {
+      key   = "k8s.io/role/master"
+      value = 1
+    }
+  ]
+
+  bastion_tags = [
+    {
+      key   = "k8s.io/role/bastion"
+      value = 1
+    }
+  ]
+
+
+  nodes = tomap(
+    {
+      for autoscale_group in data.aws_autoscaling_group.nodes :
+      autoscale_group.name => merge(data.aws_launch_configuration.nodes[autoscale_group.launch_configuration],
+        {
+          tags = concat([{ key = "Name", value = autoscale_group.name }], local.node_tags, local.common_tags)
+        }
+      )
+    }
+  )
+
+  masters = tomap(
+    {
+      for autoscale_group in data.aws_autoscaling_group.masters :
+      autoscale_group.name => merge(data.aws_launch_configuration.masters[autoscale_group.launch_configuration],
+        {
+          tags = concat([{ key = "Name", value = autoscale_group.name }], local.master_tags, local.common_tags)
+        }
+      )
+    }
+  )
+
+  bastions = tomap(
+    {
+      for autoscale_group in data.aws_autoscaling_group.bastions :
+      autoscale_group.name => merge(data.aws_launch_configuration.bastions[autoscale_group.launch_configuration],
+        {
+          tags = concat([{ key = "Name", value = autoscale_group.name }], local.bastion_tags, local.common_tags)
+        }
+      )
+    }
+  )
 }
