@@ -3,6 +3,7 @@ locals {
 }
 
 data "aws_autoscaling_groups" "nodes" {
+  count = var.enabled ? 1 : 0
   filter {
     name   = "key"
     values = ["k8s.io/role/node"]
@@ -15,6 +16,7 @@ data "aws_autoscaling_groups" "nodes" {
 }
 
 data "aws_autoscaling_groups" "masters" {
+  count = var.enabled ? 1 : 0
   filter {
     name   = "key"
     values = ["k8s.io/role/master"]
@@ -27,6 +29,7 @@ data "aws_autoscaling_groups" "masters" {
 }
 
 data "aws_autoscaling_groups" "bastions" {
+  count = var.enabled ? 1 : 0
   filter {
     name   = "key"
     values = ["k8s.io/role/bastion"]
@@ -39,18 +42,18 @@ data "aws_autoscaling_groups" "bastions" {
 }
 
 data "aws_autoscaling_group" "nodes" {
-  count = length(data.aws_autoscaling_groups.nodes.names)
-  name  = element(data.aws_autoscaling_groups.nodes.names, count.index)
+  count = var.enabled ? length(flatten(data.aws_autoscaling_groups.nodes.*.names)) : 0
+  name  = element(flatten(data.aws_autoscaling_groups.nodes.*.names), count.index)
 }
 
 data "aws_autoscaling_group" "masters" {
-  count = length(data.aws_autoscaling_groups.masters.names)
-  name  = element(data.aws_autoscaling_groups.masters.names, count.index)
+  count = var.enabled ? length(flatten(data.aws_autoscaling_groups.masters.*.names)) : 0
+  name  = element(flatten(data.aws_autoscaling_groups.masters.*.names), count.index)
 }
 
 data "aws_autoscaling_group" "bastions" {
-  count = length(data.aws_autoscaling_groups.masters.names)
-  name  = element(data.aws_autoscaling_groups.masters.names, count.index)
+  count = var.enabled ? length(flatten(data.aws_autoscaling_groups.bastions.*.names)) : 0
+  name  = element(flatten(data.aws_autoscaling_groups.bastions.*.names), count.index)
 }
 
 data "aws_launch_configuration" "nodes" {
