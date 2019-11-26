@@ -1,7 +1,3 @@
-locals {
-  cluster_tag = "kubernetes.io/cluster/${var.cluster_name}"
-}
-
 data "aws_autoscaling_groups" "nodes" {
   count = var.enabled ? 1 : 0
   filter {
