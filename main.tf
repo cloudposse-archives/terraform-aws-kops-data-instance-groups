@@ -54,17 +54,17 @@ data "aws_autoscaling_group" "bastions" {
 
 data "aws_launch_configuration" "nodes" {
   for_each = tomap(data.aws_autoscaling_group.nodes)
-  name     = each.key
+  name     = each.value.launch_configuration
 }
 
 data "aws_launch_configuration" "masters" {
   for_each = tomap(data.aws_autoscaling_group.masters)
-  name     = each.key
+  name     = each.value.launch_configuration
 }
 
 data "aws_launch_configuration" "bastions" {
   for_each = tomap(data.aws_autoscaling_group.bastions)
-  name     = each.key
+  name     = each.value.launch_configuration
 }
 
 locals {
