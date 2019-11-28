@@ -43,12 +43,12 @@ data "aws_autoscaling_group" "nodes" {
 }
 
 data "aws_autoscaling_group" "masters" {
-  for_each = toset(data.aws_autoscaling_groups.masters.*.names)
+  for_each = toset(flatten(data.aws_autoscaling_groups.masters.*.names))
   name     = each.key
 }
 
 data "aws_autoscaling_group" "bastions" {
-  for_each = toset(data.aws_autoscaling_groups.bastions.*.names)
+  for_each = toset(flatten(data.aws_autoscaling_groups.bastions.*.names))
   name     = each.key
 }
 
