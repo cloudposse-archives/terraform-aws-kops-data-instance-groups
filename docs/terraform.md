@@ -9,7 +9,11 @@
 
 | Name | Description |
 |------|-------------|
-| bastions | Bastions autoscale groups + launch configurations |
-| masters | Masters autoscale groups + launch configurations |
-| nodes | Nodes autoscale groups + launch configurations |
+| bastions | Autoscale groups created for bastions instance groups |
+| bastions_tags | Tags of bastions instance groups |
+| common_tags | Common tags for all instance groups |
+| masters | Autoscale groups created for masters instance groups |
+| masters_tags | Tags of masters instance groups |
+| nodes | Autoscale groups created for node instance groups |
+| nodes_tags | Tags of nodes instance groups |
 

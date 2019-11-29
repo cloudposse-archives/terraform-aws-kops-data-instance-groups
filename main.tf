@@ -38,6 +38,10 @@ data "aws_autoscaling_groups" "bastions" {
 }
 
 locals {
+  nodes    = flatten(data.aws_autoscaling_groups.nodes.*.names)
+  masters  = flatten(data.aws_autoscaling_groups.masters.*.names)
+  bastions = flatten(data.aws_autoscaling_groups.bastions.*.names)
+
   common_tags = [
     {
       key   = "Cluster"

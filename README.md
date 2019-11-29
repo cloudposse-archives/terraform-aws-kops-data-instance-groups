@@ -42,12 +42,12 @@
 
 [![Cloud Posse][logo]](https://cpco.io/homepage)
 
-# terraform-aws-kops-data-launch-configurations
+# terraform-aws-kops-data-instance-groups
 
- [![Codefresh Build Status](https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-kops-data-launch-configurations?type=cf-1)](https://g.codefresh.io/public/accounts/cloudposse/pipelines/5d4099b8a82ec64bb9fdf9a7) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-kops-data-launch-configurations.svg)](https://github.com/cloudposse/terraform-aws-kops-data-network/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+ [![Codefresh Build Status](https://g.codefresh.io/api/badges/pipeline/cloudposse/terraform-modules%2Fterraform-aws-kops-data-instance-groups?type=cf-1)](https://g.codefresh.io/public/accounts/cloudposse/pipelines/5d4099b8a82ec64bb9fdf9a7) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-kops-data-instance-groups.svg)](https://github.com/cloudposse/terraform-aws-kops-data-instance-groups/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
 
 
-Terraform module to lookup launch configurations resources within a [Kops](https://github.com/kubernetes/kops) cluster
+Terraform module to get auto scale groups that are instace groups created with [Kops](https://github.com/kubernetes/kops)
 
 
 ---
@@ -85,12 +85,12 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 
 **IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
-Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations/releases).
+Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/cloudposse/terraform-aws-kops-data-instance-groups/releases).
 
 
 ```hcl
 module "kops_metadata" {
-  source       = "git::https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations.git?ref=master"
+  source       = "git::https://github.com/cloudposse/terraform-aws-kops-data-instance-groups.git?ref=master"
   cluster_name = "cluster.domain.com"
 }
 ```
@@ -122,16 +122,20 @@ Available targets:
 
 | Name | Description |
 |------|-------------|
-| bastions | Bastions autoscale groups + launch configurations |
-| masters | Masters autoscale groups + launch configurations |
-| nodes | Nodes autoscale groups + launch configurations |
+| bastions | Autoscale groups created for bastions instance groups |
+| bastions_tags | Tags of bastions instance groups |
+| common_tags | Common tags for all instance groups |
+| masters | Autoscale groups created for masters instance groups |
+| masters_tags | Tags of masters instance groups |
+| nodes | Autoscale groups created for node instance groups |
+| nodes_tags | Tags of nodes instance groups |
 
 
 
 
 ## Share the Love 
 
-Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations)! (it helps us **a lot**) 
+Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-aws-kops-data-instance-groups)! (it helps us **a lot**) 
 
 Are you using this project or any of our other projects? Consider [leaving a testimonial][testimonial]. =)
 
@@ -149,7 +153,7 @@ Check out these related projects.
 
 **Got a question?** We got answers. 
 
-File a GitHub [issue](https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations/issues), send us an [email][email] or join our [Slack Community][slack].
+File a GitHub [issue](https://github.com/cloudposse/terraform-aws-kops-data-instance-groups/issues), send us an [email][email] or join our [Slack Community][slack].
 
 [![README Commercial Support][readme_commercial_support_img]][readme_commercial_support_link]
 
@@ -193,7 +197,7 @@ Sign up for [our newsletter][newsletter] that covers everything on our technolog
 
 ### Bug Reports & Feature Requests
 
-Please use the [issue tracker](https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations/issues) to report any bugs or file feature requests.
+Please use the [issue tracker](https://github.com/cloudposse/terraform-aws-kops-data-instance-groups/issues) to report any bugs or file feature requests.
 
 ### Developing
 
@@ -267,41 +271,41 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 
 ### Contributors
 
-|  [![Erik Osterman][osterman_avatar]][osterman_homepage]<br/>[Erik Osterman][osterman_homepage] |
+|  [![Igor Rodionov][goruha_avatar]][goruha_homepage]<br/>[Igor Rodionov][goruha_homepage] |
 |---|
 
-  [osterman_homepage]: https://github.com/osterman
-  [osterman_avatar]: https://img.cloudposse.com/150x150/https://github.com/osterman.png
+  [goruha_homepage]: https://github.com/goruha
+  [goruha_avatar]: https://img.cloudposse.com/150x150/https://github.com/goruha.png
 
 [![README Footer][readme_footer_img]][readme_footer_link]
 [![Beacon][beacon]][website]
 
   [logo]: https://cloudposse.com/logo-300x69.svg
-  [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=docs
-  [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=website
-  [github]: https://cpco.io/github?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=github
-  [jobs]: https://cpco.io/jobs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=jobs
-  [hire]: https://cpco.io/hire?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=hire
-  [slack]: https://cpco.io/slack?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=slack
-  [linkedin]: https://cpco.io/linkedin?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=linkedin
-  [twitter]: https://cpco.io/twitter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=twitter
-  [testimonial]: https://cpco.io/leave-testimonial?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=testimonial
-  [office_hours]: https://cloudposse.com/office-hours?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=office_hours
-  [newsletter]: https://cpco.io/newsletter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=newsletter
-  [email]: https://cpco.io/email?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=email
-  [commercial_support]: https://cpco.io/commercial-support?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=commercial_support
-  [we_love_open_source]: https://cpco.io/we-love-open-source?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=we_love_open_source
-  [terraform_modules]: https://cpco.io/terraform-modules?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=terraform_modules
+  [docs]: https://cpco.io/docs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=docs
+  [website]: https://cpco.io/homepage?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=website
+  [github]: https://cpco.io/github?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=github
+  [jobs]: https://cpco.io/jobs?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=jobs
+  [hire]: https://cpco.io/hire?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=hire
+  [slack]: https://cpco.io/slack?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=slack
+  [linkedin]: https://cpco.io/linkedin?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=linkedin
+  [twitter]: https://cpco.io/twitter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=twitter
+  [testimonial]: https://cpco.io/leave-testimonial?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=testimonial
+  [office_hours]: https://cloudposse.com/office-hours?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=office_hours
+  [newsletter]: https://cpco.io/newsletter?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=newsletter
+  [email]: https://cpco.io/email?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=email
+  [commercial_support]: https://cpco.io/commercial-support?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=commercial_support
+  [we_love_open_source]: https://cpco.io/we-love-open-source?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=we_love_open_source
+  [terraform_modules]: https://cpco.io/terraform-modules?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=terraform_modules
   [readme_header_img]: https://cloudposse.com/readme/header/img
-  [readme_header_link]: https://cloudposse.com/readme/header/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=readme_header_link
+  [readme_header_link]: https://cloudposse.com/readme/header/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=readme_header_link
   [readme_footer_img]: https://cloudposse.com/readme/footer/img
-  [readme_footer_link]: https://cloudposse.com/readme/footer/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=readme_footer_link
+  [readme_footer_link]: https://cloudposse.com/readme/footer/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=readme_footer_link
   [readme_commercial_support_img]: https://cloudposse.com/readme/commercial-support/img
-  [readme_commercial_support_link]: https://cloudposse.com/readme/commercial-support/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-launch-configurations&utm_content=readme_commercial_support_link
-  [share_twitter]: https://twitter.com/intent/tweet/?text=terraform-aws-kops-data-launch-configurations&url=https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations
-  [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-aws-kops-data-launch-configurations&url=https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations
-  [share_reddit]: https://reddit.com/submit/?url=https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations
-  [share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations
-  [share_googleplus]: https://plus.google.com/share?url=https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations
-  [share_email]: mailto:?subject=terraform-aws-kops-data-launch-configurations&body=https://github.com/cloudposse/terraform-aws-kops-data-launch-configurations
-  [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/cloudposse/terraform-aws-kops-data-launch-configurations?pixel&cs=github&cm=readme&an=terraform-aws-kops-data-launch-configurations
+  [readme_commercial_support_link]: https://cloudposse.com/readme/commercial-support/link?utm_source=github&utm_medium=readme&utm_campaign=cloudposse/terraform-aws-kops-data-instance-groups&utm_content=readme_commercial_support_link
+  [share_twitter]: https://twitter.com/intent/tweet/?text=terraform-aws-kops-data-instance-groups&url=https://github.com/cloudposse/terraform-aws-kops-data-instance-groups
+  [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-aws-kops-data-instance-groups&url=https://github.com/cloudposse/terraform-aws-kops-data-instance-groups
+  [share_reddit]: https://reddit.com/submit/?url=https://github.com/cloudposse/terraform-aws-kops-data-instance-groups
+  [share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/cloudposse/terraform-aws-kops-data-instance-groups
+  [share_googleplus]: https://plus.google.com/share?url=https://github.com/cloudposse/terraform-aws-kops-data-instance-groups
+  [share_email]: mailto:?subject=terraform-aws-kops-data-instance-groups&body=https://github.com/cloudposse/terraform-aws-kops-data-instance-groups
+  [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/cloudposse/terraform-aws-kops-data-instance-groups?pixel&cs=github&cm=readme&an=terraform-aws-kops-data-instance-groups
