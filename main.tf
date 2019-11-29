@@ -37,36 +37,6 @@ data "aws_autoscaling_groups" "bastions" {
   }
 }
 
-data "aws_autoscaling_group" "nodes" {
-  for_each = toset(flatten(data.aws_autoscaling_groups.nodes.*.names))
-  name     = each.key
-}
-
-data "aws_autoscaling_group" "masters" {
-  for_each = toset(flatten(data.aws_autoscaling_groups.masters.*.names))
-  name     = each.key
-}
-
-data "aws_autoscaling_group" "bastions" {
-  for_each = toset(flatten(data.aws_autoscaling_groups.bastions.*.names))
-  name     = each.key
-}
-
-data "aws_launch_configuration" "nodes" {
-  for_each = tomap(data.aws_autoscaling_group.nodes)
-  name     = each.value.launch_configuration
-}
-
-data "aws_launch_configuration" "masters" {
-  for_each = tomap(data.aws_autoscaling_group.masters)
-  name     = each.value.launch_configuration
-}
-
-data "aws_launch_configuration" "bastions" {
-  for_each = tomap(data.aws_autoscaling_group.bastions)
-  name     = each.value.launch_configuration
-}
-
 locals {
   common_tags = [
     {
@@ -99,35 +69,4 @@ locals {
       value = 1
     }
   ]
-
-
-  nodes = tomap(
-    {
-      for name, group in data.aws_autoscaling_group.nodes : name => merge(
-        group,
-        { launch_configuration = data.aws_launch_configuration.nodes[name] },
-        { tags = concat([{ key = "Name", value = name }], local.node_tags, local.common_tags) }
-      )
-    }
-  )
-
-  masters = tomap(
-    {
-      for name, group in data.aws_autoscaling_group.masters : name => merge(
-        group,
-        { launch_configuration = data.aws_launch_configuration.masters[name] },
-        { tags = concat([{ key = "Name", value = name }], local.master_tags, local.common_tags) }
-      )
-    }
-  )
-
-  bastions = tomap(
-    {
-      for name, group in data.aws_autoscaling_group.bastions : name => merge(
-        group,
-        { launch_configuration = data.aws_launch_configuration.bastions[name] },
-        { tags = concat([{ key = "Name", value = name }], local.bastion_tags, local.common_tags) }
-      )
-    }
-  )
 }
